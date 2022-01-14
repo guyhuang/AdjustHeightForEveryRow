@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mvvm="clr-namespace:RecForYou.Mvvm"
+             x:Class="RecForYou.GridInGridPage">
+    <ContentPage.BindingContext>
+        <mvvm:GridInGridViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout Margin="5,50,5,0" >
+            <Label Text="Result:" />
+            <ScrollView x:Name="scrollViewResult" VerticalOptions="FillAndExpand">
+                <StackLayout BindableLayout.ItemsSource="{Binding GridResult}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <!-- Every Grid has one row and 3 columns.-->
+                            <Grid x:Name="ARowGrid" Margin="5,5,5,0" ColumnSpacing="5" RowSpacing="15" RowDefinitions="Auto" ColumnDefinitions="30*,30*,30*" BindableLayout.ItemsSource="{Binding Items}">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate>
+                                        <!-- Every cell in ARowGrid is a nested Grid. Using grid is for the purpose of button.-->
+                                        <Grid x:Name="NestedGrid" Grid.Row="0" Grid.Column="{Binding Col}" RowDefinitions="Auto" ColumnDefinitions="*" >
+                                            <!-- Frame for the corner radius and shadow.-->
+                                            <Frame Grid.Row="0" Grid.Column="0" CornerRadius="5" Margin="0">
+                                                <!-- Label text is real display text.-->
+                                                <Label Text="{Binding Value}" Margin="-15" FontSize="Small" LineBreakMode="WordWrap" HorizontalOptions="Center" VerticalOptions="Start" HorizontalTextAlignment="Center"/>
+                                            </Frame>
+                                            <Frame Grid.Row="0" Grid.Column="0" CornerRadius="5" Margin="0" BackgroundColor="Transparent">
+                                                <!-- Label text is real display text.-->
+                                                <Label Text="{Binding HiddenValue}" Margin="-15" FontSize="Small" LineBreakMode="WordWrap" HorizontalOptions="Center" VerticalOptions="Start" HorizontalTextAlignment="Center" TextColor="Transparent"/>
+                                            </Frame>
+                                            <!-- Here placing a hole-cell button for a better click gesture. -->
+                                            <Button Grid.Row="0" Grid.Column="0" BackgroundColor="Transparent" Clicked="Button_Clicked" Margin="5" HeightRequest="10"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </Grid>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </StackLayout>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

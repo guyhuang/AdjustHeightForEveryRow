@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mvvm="clr-namespace:RecForYou.Mvvm"
+             x:Class="RecForYou.GridPage">
+    <ContentPage.BindingContext>
+        <mvvm:GridViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout Margin="5,50,5,0" >
+            <Label Text="Result:" />
+            <ScrollView x:Name="scrollViewResult" VerticalOptions="StartAndExpand">
+                <Grid BindableLayout.ItemsSource="{Binding GridResult}" ColumnDefinitions="*,*,*" RowDefinitions="Auto" VerticalOptions="StartAndExpand">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <!-- Every cell is a nested Grid. Using grid is for the purpose of button.-->
+                            <Grid x:Name="NestedGrid" Grid.Row="{Binding Row}" Grid.Column="{Binding Col}" RowDefinitions="Auto" ColumnDefinitions="*" >
+                                <!-- Frame for the corner radius and shadow.-->
+                                <Frame Grid.Row="0" Grid.Column="0" CornerRadius="5" Margin="1">
+                                    <!-- Label text is real display text.-->
+                                    <Label Text="{Binding Value}" Margin="-15" FontSize="Small" LineBreakMode="WordWrap" HorizontalOptions="Center" VerticalOptions="StartAndExpand" HorizontalTextAlignment="Center"/>
+                                </Frame>
+                                <!-- Here placing a hole-cell button for a better click gesture. -->
+                                <!-- Button Grid.Row="0" Grid.Column="0" BackgroundColor="Transparent" Clicked="Button_Clicked" Margin="5"/-->
+                            </Grid>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </Grid>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
